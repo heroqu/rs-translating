@@ -2,30 +2,53 @@ const gulp = require('gulp')
 const babel = require('gulp-babel')
 const gulpReduce = require('gulp-reduce-async')
 const gulpRename = require('gulp-rename')
+const gulpFileChange = require('gulp-filechange')
 const path = require('path')
+const del = require('del')
 
 const CONFIG = require('./config')
 
+gulp.task('extract:clean', () => del([CONFIG.extracted]))
+
 /**
- * 1. Extract all the key string from React components
- * that are subject for translation by react-intl
+ * 1. Extract all the react-intl key string from React components
  */
-gulp.task('extract', () =>
-  gulp.src(`${path.resolve(CONFIG.src)}/**/*.js`).pipe(
-    babel({
-      babelrc: false,
-      presets: ['react-app'],
-      plugins: [
-        [
-          'react-intl',
-          {
-            messagesDir: CONFIG.extracted,
-            enforceDescriptions: false
-          }
+gulp.task('extract', ['extract:clean'], () =>
+  gulp
+    .src(`${path.resolve(CONFIG.src)}/**/*.js`)
+    .pipe(
+      gulpFileChange(file => {
+        /**
+        * The goal of this step is to keep this project decoupled
+        * from main React site. The point is that babel
+        * does lookup of its own plugins based on file (vinyl object)
+        * location, and we get a problem here as this location is
+        * currently inside React app, which is 'external' to this project
+        * and we don't to install the react-intl plugins there, we
+        * want them to be here.
+        * This is why we modify the path and base of each file on the fly
+        * to be inside CWD, thus babel will lookup the plugins here.
+        */
+        const src = path.resolve(CONFIG.src)
+        file.base = file.base.replace(src, file.cwd)
+        file.path = file.path.replace(src, file.cwd)
+      })
+    )
+    .pipe(
+      babel({
+        babelrc: false,
+        presets: ['react-app'],
+        plugins: [
+          [
+            'react-intl',
+            {
+              messagesDir: CONFIG.extracted,
+              enforceDescriptions: false
+            }
+          ]
         ]
-      ]
-    })
-  )
+      })
+    )
 )
 
 /**
@@ -61,8 +84,7 @@ gulp.task('sample', () =>
 
 /**
  * 3. After all translation files for all the locales are ready
- * use this task to combine them into a single file
- * to be loaded by react app.
+ * combine them into a single file
  */
 gulp.task('build', () =>
   gulp
@@ -80,9 +102,9 @@ gulp.task('build', () =>
 )
 
 /**
- * 4. Export built traslations file to the main React site
+ * 4. Send traslations file to the main React site
  */
-gulp.task('export', () => {
+gulp.task('deploy', () => {
   gulp
     .src(`${path.resolve(CONFIG.build)}/messages.json`)
     .pipe(gulp.dest(CONFIG.dest))
