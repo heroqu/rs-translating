@@ -1,0 +1,26 @@
+{
+  "name": "Translating",
+  "description": "Automate extraction, combining, building and exporting back the translations for the main React site powered by react-intl",
+  "version": "0.0.1",
+  "scripts": {
+    "extract": "gulp extract",
+    "sample": "gulp sample",
+    "build": "gulp build",
+    "export": "gulp export"
+  },
+  "keywords": [],
+  "author": "Heroqu",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-react-intl": "^2.4.0",
+    "babel-preset-react-app": "^3.1.1",
+    "babel-runtime": "^6.26.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-reduce-async": "^1.0.0",
+    "gulp-rename": "^1.2.2"
+  }
+}
