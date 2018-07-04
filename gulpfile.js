@@ -8,6 +8,8 @@ const del = require('del')
 
 const CONFIG = require('./config')
 
+const SRC_PATTERN = `${path.resolve(CONFIG.src)}/**/*.js`
+
 gulp.task('extract:clean', () => del([CONFIG.extracted]))
 
 /**
@@ -15,7 +17,7 @@ gulp.task('extract:clean', () => del([CONFIG.extracted]))
  */
 gulp.task('extract', ['extract:clean'], () =>
   gulp
-    .src(`${path.resolve(CONFIG.src)}/**/*.js`)
+    .src(SRC_PATTERN)
     .pipe(
       gulpFileChange(file => {
         /**
@@ -24,7 +26,7 @@ gulp.task('extract', ['extract:clean'], () =>
         * does lookup of its own plugins based on file (vinyl object)
         * location, and we get a problem here as this location is
         * currently inside React app, which is 'external' to this project
-        * and we don't to install the react-intl plugins there, we
+        * and we don't like to install all the react-intl plugins there, we
         * want them to be here.
         * This is why we modify the path and base of each file on the fly
         * to be inside CWD, thus babel will lookup the plugins here.
@@ -108,4 +110,8 @@ gulp.task('deploy', () => {
   gulp
     .src(`${path.resolve(CONFIG.build)}/messages.json`)
     .pipe(gulp.dest(CONFIG.dest))
+})
+
+gulp.task('watch', function(){
+  gulp.watch(SRC_PATTERN, ['extract'])
 })
