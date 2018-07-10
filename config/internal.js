@@ -1,3 +1,6 @@
+/**
+ * internal directory structure
+ */
 module.exports = {
   extracted: './extracted',
   edited: './edited',

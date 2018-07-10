@@ -25,13 +25,21 @@ translating
 ├── sample
 │  └── sample.json
 │
+├── config
+│  ├── index.js
+│  ├── external.js
+│  └── internal.js
 ├── gulpfile.js
 └── package.json
 ```
 
+One can change the names of sub-directories in configuration file `config/internal.js`.
+
+One can also change the final destination directory (that is outside of this project) by editing `config/external.js`
+
 ## The steps
 
-Here are the steps one is supposed to do inside this sub-project while preparing the translations:
+Here are the steps one is supposed to do inside this sub-project to prepare the translations:
 
 1. `gulp extract`
 
