@@ -1,6 +1,6 @@
 # Translating
 
-a sub-project of [React static site](https://github.com/heroqu/react-static-site).
+a sub-project of [React i18n site](https://github.com/heroqu/react-i18n-site).
 
 This sub-project is designed to facilitate the preparation of key phrase translation files for the main React site which uses [React-intl](https://www.npmjs.com/package/react-intl) package for i18n.
 
