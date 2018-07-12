@@ -1,7 +1,7 @@
 {
-  "name": "ss-translating",
+  "name": "rs-translating",
   "description":
-    "Static-site translating: a service sub-project that automates extraction, combining, building and exporting back the react-intl translations for the mother React site.",
+    "A service sub-project, that automates extraction, combining, building and exporting back the react-intl translations for the mother React site.",
   "version": "0.0.2",
   "scripts": {
     "extract": "gulp extract",
@@ -12,11 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heroqu/ss-translating.git"
+    "url": "git+https://github.com/heroqu/rs-translating.git"
   },
-  "keywords": ["react-intl", "gulp", "i18n"],
+  "keywords": ["react-intl", "gulp", "i18n", "translation"],
   "author": "Heroqu",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
