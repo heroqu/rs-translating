@@ -4,7 +4,7 @@ a sub-project of [React i18n site](https://github.com/heroqu/react-i18n-site).
 
 This sub-project is designed to facilitate the preparation of key phrase translation files for the main React site which uses [React-intl](https://www.npmjs.com/package/react-intl) package for i18n.
 
-It uses the power of [Gulp](https://gulpjs.com) to automate all the routine procedures.
+We use the power of [Gulp](https://gulpjs.com) here to automate all the routine procedures.
 
 ## Directory structure
 
@@ -41,20 +41,27 @@ One can also change the final destination directory (that is outside of this pro
 
 Here are the steps one is supposed to do inside this sub-project to prepare the translations:
 
-1. `gulp extract`
+1. **gulp extract**
 
-  Extracts key phrases from all `<FormattedMessage>` React components used inside the main site. The results are stored as json files inside /extracted directory.
+  Extracts key phrases from all `<FormattedMessage>` React components used inside the main site. The results are stored as json files inside `/extracted` directory.
 
-2. `gulp sample`
+2. **gulp sample**
 
   Collects the key phrases from all those files, dedupes them and put the result into a single `/sample/sample.json` file. This is the file that can be treated as a starting point for any particular language.
 
-3. Now we need some human being to do actual translation. One has to make a separate copy of` sample.json` for each target language, rename it accordingly (`en.json`, `ru.json` etc.), put it into `/edited` directory and finally edit: translate all the key phrases
+3. Now we need some human to do the actual translation job. One has to:
 
-4. `gulp build`
+- make a separate copy of `sample.json` for each target language
+- rename it according to locale name (`en.json`, `ru.json` etc.)
+- put it into `/edited` directory
+- and finally edit it: translate all the key phrases that are there.
 
-  Merges all edited translation files into production ready file, namely `/build/messages.json`
+We intentionally leave these operations manual to make sure that no valuable work that might already be there inside `/edited` gets lost by automatic overriding of the files.
 
-5. `gulp deploy`
+4. **gulp build**
 
-  Copies `/build/messages.json` file into a directory of the main React site.
+  Merges all edited translation files from `/edited` directory into a production ready file `/build/messages.json`
+
+5. **gulp deploy**
+
+  Copies `/build/messages.json` file into a directory of the main React site (that is outside of this project directory).
